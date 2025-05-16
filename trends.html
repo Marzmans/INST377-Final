@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trends - U.S. Fiscal Tracker</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<nav class="navbar">
+  <a href="home.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="trends.html">Trends</a>
+</nav>
+
+<body>
+  <h1>Stored Fiscal Data (Trends)</h1>
+
+  <div class="summary">
+    <p>Total Revenue: <span id="totalRevenue">$0.00</span></p>
+    <p>Total Spending: <span id="totalSpending">$0.00</span></p>
+    <p>Total Deficit: <span id="totalDeficit">$0.00</span></p>
+  </div>
+
+  <h2>Amount by Category</h2>
+  <canvas id="barChart" width="600" height="300"></canvas>
+
+  <script>
+    fetch('/api/getStoredData')
+      .then(res => res.json())
+      .then(data => {
+        // summary stats
+        let totalRevenue = 0, totalSpending = 0;
+
+        data.forEach(row => {
+          if (row.type === 'Revenue') totalRevenue += row.amount;
+          if (row.type === 'Spending') totalSpending += row.amount;
+        });
+
+        const totalDeficit = totalSpending - totalRevenue;
+        document.getElementById('totalRevenue').textContent = `$${totalRevenue.toFixed(2)}`;
+        document.getElementById('totalSpending').textContent = `$${totalSpending.toFixed(2)}`;
+        document.getElementById('totalDeficit').textContent = `$${totalDeficit.toFixed(2)}`;
+
+        const categoryMap = {
+          "140": "Revenue",
+          "280": "Spending"
+        };
+
+        const categoryData = {};
+        data.forEach(row => {
+          const label = categoryMap[row.category] || "Other";
+          if (!isNaN(row.amount)) {
+            categoryData[label] = (categoryData[label] || 0) + row.amount;
+          }
+        });
+
+        const barLabels = Object.keys(categoryData);
+        const barValues = Object.values(categoryData);
+
+        new Chart(document.getElementById('barChart'), {
+          type: 'bar',
+          data: {
+            labels: barLabels,
+            datasets: [{
+              label: 'Amount by Category',
+              data: barValues,
+              backgroundColor: 'rgba(54, 162, 235, 0.6)'
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              title: {
+                display: false
+              }
+            }
+          }
+        });
+      });
+  </script>
+</body>
+</html>
