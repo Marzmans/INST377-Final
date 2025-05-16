@@ -46,12 +46,13 @@ module.exports = async (req, res) => {
 
     const { data, error } = await supabase.from('fiscal_data').insert(formatted);
 
-    if (error) {
-      console.error('Supabase insert error:', error);
-      return res.status(500).json({ error: 'Supabase insert error', detail: error });
-    }
+if (error) {
+  console.error('Supabase insert error:', error);
+  return res.status(500).json({ error: 'Supabase insert error', detail: error });
+}
 
-    res.json({ success: true, inserted: data.length });
+res.json({ success: true, inserted: data ? data.length : 0 });
+
   } catch (err) {
     console.error('API fetch/store error:', err.message);
     res.status(500).json({ error: 'Internal Server Error', detail: err.message });
