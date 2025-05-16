@@ -1,29 +1,11 @@
-const axios = require('axios');
-const { createClient } = require('@supabase/supabase-js');
-
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+router.post('/fetchAndStoreYTD', async (req, res) => {
   try {
     const treasuryURL =
       'https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_1?' +
       'filter=record_type_cd:eq:SL,classification_desc:eq:Year-to-Date,record_fiscal_year:eq:2024';
 
     const response = await axios.get(treasuryURL);
-
-    // Debugging line
-    console.log('Treasury raw response:', JSON.stringify(response.data, null, 2));
-
-    const records = response?.data?.data;
-
-    if (!records || !Array.isArray(records)) {
-      console.error('Treasury API returned no valid records.');
-      return res.status(500).json({ error: 'Treasury API returned no valid records.' });
-    }
+    const records = response.data.data;
 
     const formatted = records
       .filter(r =>
@@ -42,19 +24,18 @@ module.exports = async (req, res) => {
               r.line_code_nbr === '280' ? 'Spending' : 'Other'
       }));
 
-    console.log('Formatted records:', formatted.length);
+    const { error } = await supabase
+      .from('fiscal_data')
+      .insert(formatted, { returning: 'minimal' }); // or 'representation' if needed
 
-    const { data, error } = await supabase.from('fiscal_data').insert(formatted);
+    if (error) {
+      console.error('Insert error:', error);
+      return res.status(500).json({ error: 'Supabase insert error', detail: error });
+    }
 
-if (error) {
-  console.error('Supabase insert error:', error);
-  return res.status(500).json({ error: 'Supabase insert error', detail: error });
-}
-
-res.json({ success: true, inserted: data ? data.length : 0 });
-
+    res.json({ success: true, inserted: formatted.length });
   } catch (err) {
-    console.error('API fetch/store error:', err.message);
-    res.status(500).json({ error: 'Internal Server Error', detail: err.message });
+    console.error('Fetch error:', err.message);
+    res.status(500).json({ error: 'Failed to fetch or store data' });
   }
-};
+});
