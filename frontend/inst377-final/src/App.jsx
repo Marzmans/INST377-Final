@@ -25,6 +25,11 @@ function App() {
 
   return (
     <div className="App">
+      <nav className="navbar">
+        <h2>📊 Fiscal Dashboard</h2>
+        {/* Add nav links here if needed */}
+      </nav>
+
       <h1>Fiscal Data Loader</h1>
       <button onClick={loadData} className="animated-button">
         {loading ? 'Loading...' : 'Load Data'}
@@ -33,5 +38,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
