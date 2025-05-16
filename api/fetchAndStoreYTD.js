@@ -1,11 +1,9 @@
 const { createClient } = require('@supabase/supabase-js');
 const axios = require('axios');
 
-// Initialize Supabase client
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 module.exports = async (req, res) => {
-  // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   if (req.method !== 'POST') {
@@ -33,20 +31,24 @@ module.exports = async (req, res) => {
           r.current_month_gross_rcpt_amt ||
           r.current_month_gross_outly_amt
         ),
-        type: r.line_code_nbr === '140' ? 'Revenue' :
-              r.line_code_nbr === '280' ? 'Spending' : 'Other'
+        type:
+          r.line_code_nbr === '140'
+            ? 'Revenue'
+            : r.line_code_nbr === '280'
+            ? 'Spending'
+            : 'Other'
       }));
 
     const { data, error } = await supabase.from('fiscal_data').insert(formatted);
 
     if (error) {
-      console.error('Insert error:', error);
-      return res.status(500).json({ error });
+      console.error(' Supabase insert error:', error);
+      return res.status(500).json({ error: 'Supabase insert failed', detail: error.message });
     }
 
     res.status(200).json({ success: true, inserted: data.length });
   } catch (err) {
-    console.error('Fetch error:', err.message);
-    res.status(500).json({ error: "Failed to fetch or store data" });
+    console.error(' API fetch/store error:', err.message, err.response?.data || '');
+    res.status(500).json({ error: 'Fetch/store error', detail: err.message });
   }
 };
