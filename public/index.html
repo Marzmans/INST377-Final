@@ -48,7 +48,7 @@
       fetch('/api/fetchAndStoreYTD', { method: 'POST' })
         .then(res => res.json())
         .then(data => {
-          alert(data.success ? `Stored ${data.inserted} records.` : 'Error storing data.');
+          alert(data.success ? `Stored records or accessing already stored data.` : 'Error storing data.');
           location.reload(); // refresh to show updated stats
         });
     }
