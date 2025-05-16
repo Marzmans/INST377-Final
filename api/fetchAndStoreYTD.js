@@ -1,13 +1,11 @@
-const { createClient } = require('@supabase/supabase-js');
 const axios = require('axios');
+const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
@@ -16,7 +14,16 @@ module.exports = async (req, res) => {
       'filter=record_type_cd:eq:SL,classification_desc:eq:Year-to-Date,record_fiscal_year:eq:2024';
 
     const response = await axios.get(treasuryURL);
-    const records = response.data.data;
+
+    // Debugging line
+    console.log('Treasury raw response:', JSON.stringify(response.data, null, 2));
+
+    const records = response?.data?.data;
+
+    if (!records || !Array.isArray(records)) {
+      console.error('Treasury API returned no valid records.');
+      return res.status(500).json({ error: 'Treasury API returned no valid records.' });
+    }
 
     const formatted = records
       .filter(r =>
@@ -31,24 +38,22 @@ module.exports = async (req, res) => {
           r.current_month_gross_rcpt_amt ||
           r.current_month_gross_outly_amt
         ),
-        type:
-          r.line_code_nbr === '140'
-            ? 'Revenue'
-            : r.line_code_nbr === '280'
-            ? 'Spending'
-            : 'Other'
+        type: r.line_code_nbr === '140' ? 'Revenue' :
+              r.line_code_nbr === '280' ? 'Spending' : 'Other'
       }));
+
+    console.log('Formatted records:', formatted.length);
 
     const { data, error } = await supabase.from('fiscal_data').insert(formatted);
 
     if (error) {
-      console.error(' Supabase insert error:', error);
-      return res.status(500).json({ error: 'Supabase insert failed', detail: error.message });
+      console.error('Supabase insert error:', error);
+      return res.status(500).json({ error: 'Supabase insert error', detail: error });
     }
 
-    res.status(200).json({ success: true, inserted: data.length });
+    res.json({ success: true, inserted: data.length });
   } catch (err) {
-    console.error(' API fetch/store error:', err.message, err.response?.data || '');
-    res.status(500).json({ error: 'Fetch/store error', detail: err.message });
+    console.error('API fetch/store error:', err.message);
+    res.status(500).json({ error: 'Internal Server Error', detail: err.message });
   }
 };
