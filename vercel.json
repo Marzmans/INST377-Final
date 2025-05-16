@@ -6,9 +6,11 @@
       "use": "@vercel/node"
     },
     {
-      "src": "frontend/inst377-final/index.html",
+      "src": "frontend/inst377-final/package.json",
       "use": "@vercel/static-build",
-      "config": {"distDir": "frontend/inst377-final/dist"}
+      "config": {
+        "distDir": "frontend/inst377-final/dist"
+      }
     }
   ],
   "routes": [
