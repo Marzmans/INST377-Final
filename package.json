@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "node server.js",
+        "build": "cd frontend/inst377-final && npm install && npm run build",
     "dev": "nodemon server.js"
   },
   "repository": {
