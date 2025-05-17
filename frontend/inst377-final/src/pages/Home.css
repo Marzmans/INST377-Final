@@ -21,7 +21,10 @@
   justify-content: space-between;
 }
 
+/* REQUIREMENT: Advanced CSS animations - Button styles with animations */
 .load-button {
+  position: relative;
+  overflow: hidden; /* For ripple effect */
   padding: 10px 16px;
   font-size: 1em;
   background-color: #007bff;
@@ -29,17 +32,46 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
   margin-bottom: 2rem;
 }
 
+/* Hover styles */
 .load-button:hover {
   background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Active (click) styles */
+.load-button:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled state */
 .load-button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* REQUIREMENT: Advanced CSS animations - Ripple effect styles */
+.load-button .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
 }
 
 .message-popup {
@@ -57,6 +89,7 @@
   margin-bottom: 1rem;
 }
 
+/* REQUIREMENT: Advanced CSS animations - Fade animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

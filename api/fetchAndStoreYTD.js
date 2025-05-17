@@ -1,14 +1,18 @@
 const axios = require('axios');
 const { createClient } = require('@supabase/supabase-js');
 
-// Initialize Supabase client with environment variables
+// REQUIREMENT:  connection to external data source - Supabase Database
+// Initialize Supabase with env vars
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
+// REQUIREMENT: API endpoint that fetches from external provider (Treasury API) and manipulates that data to Supabase
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+// REQUIREMENT: Getting data from external provider (Treasury API)
   try {
     const treasuryURL = 'https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_1?' +
                         'filter=record_type_cd:eq:SL,classification_desc:eq:Year-to-Date,record_fiscal_year:eq:2024';
@@ -20,6 +24,7 @@ module.exports = async (req, res) => {
       return res.status(500).json({ error: 'Invalid data from Treasury API' });
     }
 
+    // REQUIREMENT: data manipulation before storing in database
     const formatted = records
       .filter(r =>
         r.record_fiscal_year &&
@@ -37,6 +42,7 @@ module.exports = async (req, res) => {
               r.line_code_nbr === '280' ? 'Spending' : 'Other'
       }));
 
+    // REQUIREMENT: Writing data to DB
     const { data, error } = await supabase
       .from('fiscal_data')
       .insert(formatted);

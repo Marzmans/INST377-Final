@@ -1,22 +1,22 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
 import Trends from './pages/Trends';
+import PageTransition from './components/PageTransition';
 import './App.css';
 
+// REQUIREMENT: Extra Credit - React with dynamic updates
 function App() {
   const [fiscalData, setFiscalData] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  // REQUIREMENT: Fetch Data with API 
-  // Fetch fiscal data 
+  // Fetch fiscal data on component mount
   useEffect(() => {
     fetchFiscalData();
   }, []);
   
-  // REQUIREMENT: Fetch #1
   const fetchFiscalData = async () => {
     try {
       const res = await fetch('/api/getStoredData');
@@ -27,7 +27,6 @@ function App() {
     }
   };
 
-  // REQUIREMENT: Fetch #2
   const loadData = async () => {
     setLoading(true);
     try {
@@ -35,7 +34,7 @@ function App() {
       const result = await res.json();
       
       if (result.success) {
-        // Refresh data after loading new data
+        // Refresh data after successfully loading new data
         await fetchFiscalData();
         return `Stored ${result.inserted} records successfully.`;
       } else {
@@ -49,31 +48,31 @@ function App() {
     }
   };
 
-  // REQUIREMENT:  3 app pages using React Router
   return (
     <Router>
       <div className="App">
         <Navbar />
         <div className="content">
-          <Routes>
-            <Route 
-              path="/" 
-              element={
-                <Home 
-                  fiscalData={fiscalData} 
-                  loadData={loadData} 
-                  loading={loading}
-                />
-              } 
-            />
-            {/* REQUIREMENT: About Page */}
-            <Route path="/about" element={<About />} />
-            {/* REQUIREMENT: Project Specific Functionality Page with Chart.js*/}
-            <Route 
-              path="/trends" 
-              element={<Trends fiscalData={fiscalData} />} 
-            />
-          </Routes>
+          {/* REQUIREMENT: Advanced CSS animations - Page Transitions */}
+          <PageTransition>
+            <Routes>
+              <Route 
+                path="/" 
+                element={
+                  <Home 
+                    fiscalData={fiscalData} 
+                    loadData={loadData} 
+                    loading={loading}
+                  />
+                } 
+              />
+              <Route path="/about" element={<About />} />
+              <Route 
+                path="/trends" 
+                element={<Trends fiscalData={fiscalData} />} 
+              />
+            </Routes>
+          </PageTransition>
         </div>
       </div>
     </Router>

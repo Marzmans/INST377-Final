@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+// REQUIREMENT: JS Lib #1 - Chart.js
 import Chart from 'chart.js/auto';
 import './Trends.css';
 
+// REQUIREMENT: Project Specific Functionality Page
+// Vizzes of fiscal data w/ Chart.js
 function Trends({ fiscalData }) {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
@@ -11,6 +14,8 @@ function Trends({ fiscalData }) {
     totalDeficit: 0
   });
 
+    // REQUIREMENT: Using the getStoredData API endpoint
+    // Data is passed from the component which fetched it from the API
   useEffect(() => {
     if (fiscalData.length > 0) {
       calculateSummaryStats();
@@ -40,7 +45,7 @@ function Trends({ fiscalData }) {
       totalDeficit: totalSpending - totalRevenue
     });
   };
-
+  //REQUIREMENT: JS Library #1, Chart.js
   const renderChart = () => {
     const categoryMap = {
       "140": "Revenue",
@@ -58,7 +63,7 @@ function Trends({ fiscalData }) {
     const barLabels = Object.keys(categoryData);
     const barValues = Object.values(categoryData);
     
-    // Destroy existing chart if it exists
+    // REmove existing chart if it exists
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
@@ -118,6 +123,7 @@ function Trends({ fiscalData }) {
     }).format(amount);
   };
 
+  // REQUIREMENT: Responsive design with flexbox in  CSS
   return (
     <div className="trends-container">
       <h1>Fiscal Data Trends</h1>

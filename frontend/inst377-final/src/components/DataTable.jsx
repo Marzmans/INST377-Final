@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { DataTable as SimpleDataTable } from 'simple-datatables';
 import './DataTable.css';
 
+// REQUIREMENT: Custom component for displaying data in a table
 function DataTable({ data }) {
   const tableRef = useRef(null);
   const dataTableRef = useRef(null);
@@ -10,10 +11,11 @@ function DataTable({ data }) {
     // Check if we need to initialize or update the table
     if (data.length > 0) {
       if (dataTableRef.current) {
-        // If table already exists, update it
+        // If table already exists, update it w/ DB
         dataTableRef.current.destroy();
       }
 
+      // REQUIREMENT: JS Lib #2 - Simple data tables
       // Initialize new table
       dataTableRef.current = new SimpleDataTable(tableRef.current, {
         searchable: true,
@@ -41,6 +43,7 @@ function DataTable({ data }) {
     }).format(amount);
   };
 
+  // REQUIREMENT: Styled with contemporary CSS & in the DataTable.css file
   return (
     <div className="table-container">
       <table id="fiscalTable" ref={tableRef}>
