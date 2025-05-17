@@ -1,15 +1,15 @@
 /* General page styling */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f9;
-  color: #222;
+  background-color: white;
+  color: black;
   margin: 0;
   padding: 0;
   line-height: 1.6;
 }
 
 .App {
-  min-height: 100vh;
+  min-height: 100;
   display: flex;
   flex-direction: column;
 }
@@ -21,8 +21,8 @@ body {
 
 /* Page title */
 h1 {
-  color: #1a1a1a;
-  margin-bottom: 0.5em;
+  color: black;
+  margin-bottom: 0.5;
 }
 
 /* Section heading */

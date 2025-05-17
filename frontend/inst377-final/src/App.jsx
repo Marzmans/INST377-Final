@@ -36,7 +36,7 @@ function App() {
       if (result.success) {
         // Refresh data after successfully loading new data
         await fetchFiscalData();
-        return `Stored ${result.inserted} records successfully.`;
+        return `Stored records successfully.`;
       } else {
         return 'Data may have already been stored.';
       }
