@@ -7,10 +7,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: #fff;
+  background: white;
   padding: 15px 20px;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 8px black;
   margin-bottom: 1.5rem;
 }
 
@@ -27,8 +27,8 @@
   overflow: hidden; /* For ripple effect */
   padding: 10px 16px;
   font-size: 1em;
-  background-color: #007bff;
-  color: #fff;
+  background-color: blue;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -40,28 +40,28 @@
 .load-button:hover {
   background-color: #0056b3;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px black;
 }
 
 /* Active (click) styles */
 .load-button:active {
   transform: scale(0.96);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px black;
 }
 
 /* Disabled state */
 .load-button:disabled {
-  background-color: #cccccc;
+  background-color: white;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-/* REQUIREMENT: Advanced CSS animations - Ripple effect styles */
+/* REQUIREMENT: Advanced CSS animations - Ripple effect  */
 .load-button .ripple {
   position: absolute;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: wheat;
   transform: scale(0);
   animation: ripple 0.6s linear;
   pointer-events: none;
@@ -75,8 +75,8 @@
 }
 
 .message-popup {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: white;
+  color: green;
   padding: 10px 15px;
   border-radius: 4px;
   margin-bottom: 20px;
@@ -85,7 +85,7 @@
 
 .table-description {
   font-size: 0.9em;
-  color: #666;
+  color: gray;
   margin-bottom: 1rem;
 }
 

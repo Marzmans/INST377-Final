@@ -4,19 +4,19 @@
 }
 
 .about-content {
-  background-color: #fff;
+  background-color: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 8px black;
   line-height: 1.6;
 }
 
 .about-content p {
   margin-bottom: 1rem;
-  color: #333;
+  color: black;
 }
 
 h1 {
-  color: #1a1a1a;
+  color: black;
   margin-bottom: 1.5rem;
 }
