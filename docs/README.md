@@ -43,58 +43,56 @@ This section provides technical documentation for developers who will maintain o
 ### Environment Variables
 
 Create a .env file in the root directory with the following variables:
-
-SUPABASE_URL=[url provided on Supabase website, specific to one's account]
-SUPABASE_KEY=[Key provided on Supabase website, specific to one's account]
+- SUPABASE_URL=[url provided on Supabase website, specific to one's account]
+- SUPABASE_KEY=[Key provided on Supabase website, specific to one's account]
 
 ### Supabase DB Setup
-Disable RLS
+- Disable RLS
 Create a table named fiscal_data in your Supabase project with the following schema:
-
 Example Below:
-Col_name - attributes
+- Col_name - attributes - data type
 
-fiscal_data schema_
-id - Auto incrementing, PK - int8 (Automatically created by Supabase)
-created_at - timestamptz (Automatically created by Supabase)
-fiscal_year - int2
-category - text 
-amount - numeric
-type - text
+- fiscal_data schema_
+- id - Auto incrementing, PK - int8 (Automatically created by Supabase)
+- created_at - timestamptz (Automatically created by Supabase)
+- fiscal_year - int2
+- category - text 
+- amount - numeric
+- type - text
 
 ### Installation Steps
 
 1. Clone the repo:
-   git clone https://github.com/Marzmans/INST377-Final.git
-   cd INST377-Final
+   - git clone https://github.com/Marzmans/INST377-Final.git
+   - cd INST377-Final
 
 2. Install dependencies using cmd within the project root folder:
-   npm install
+   - npm install
 
 3. Install frontend dependencies:
-   cd frontend/inst377-final
-   npm install
+   - cd frontend/inst377-final
+   - npm install
 
 ## Running the Application Locally
 Start the frontend development server:
-   cd frontend/inst377-final
-   npm run dev
+   - cd frontend/inst377-final
+   - npm run dev
 
 ### Production Build
 
 1. Build the frontend:
-   cd frontend/inst377-final 
-   npm run build
+   - cd frontend/inst377-final 
+   - npm run build
 
 2. Deploy to Vercel:
-    Login/Create Vercel Account
-    Import project from Github
-    Configure environment variables of deployment:
-        Copy and paste SUPABASE_URL = [url] and SUPABASE_KEY = [key] into environment variables
-    Navigate to framework settings and override/change these settings:
-        Framework preset: Other
-        Build Command: cd frontend/inst377-final && npm install && npm run build
-        Install Command: npm install
+    - Login/Create Vercel Account
+    - Import project from Github
+    - Configure environment variables of deployment:
+        - Copy and paste SUPABASE_URL = [url] and SUPABASE_KEY = [key] into environment variables
+    - Navigate to framework settings and override/change these settings:
+        - Framework preset: Other
+        - Build Command: cd frontend/inst377-final && npm install && npm run build
+        - Install Command: npm install
 
 ## API Documentation
 The application uses the following API endpoints:
