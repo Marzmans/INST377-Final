@@ -1,4 +1,5 @@
 # U.S. Treasury Fiscal Data Dashboard
+https://inst-377-final-chi.vercel.app/
 
 ## Overview
 
@@ -31,9 +32,7 @@ This section provides technical documentation for developers who will maintain o
 - **Database**: Supabase with one table: fiscal_data
 - **Deployment**: Vercel
   File Structure is available in the repo.
-
-...
-
+  
 ## Installation
 
 ### Prerequisites

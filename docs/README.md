@@ -1,5 +1,5 @@
 # U.S. Treasury Fiscal Data Dashboard
-
+Vercel Deployment: https://inst-377-final-chi.vercel.app/
 ## Overview
 
 This web application provides an interactive interface for exploring U.S. Treasury fiscal data. The dashboard simplifies access to government revenue and spending data for students, researchers, and anyone interested in U.S. fiscal policy. The application fetches data directly from the Treasury Fiscal Data API, processes it, and stores it in a Supabase database. Users can view summary statistics, explore detailed data through an interactive table, and visualize trends through charts.
