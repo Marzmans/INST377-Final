@@ -32,8 +32,6 @@ This section provides technical documentation for developers who will maintain o
 - **Deployment**: Vercel
   File Structure is available in the repo.
 
-...
-
 ## Installation
 
 ### Prerequisites
