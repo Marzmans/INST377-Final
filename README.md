@@ -32,7 +32,7 @@ This section provides technical documentation for developers who will maintain o
 - **Database**: Supabase with one table: fiscal_data
 - **Deployment**: Vercel
   File Structure is available in the repo.
-  
+
 ## Installation
 
 ### Prerequisites
@@ -49,7 +49,7 @@ SUPABASE_URL=[url provided on Supabase website, specific to one's account]
 SUPABASE_KEY=[Key provided on Supabase website, specific to one's account]
 
 ### Supabase DB Setup
-
+Disable RLS
 Create a table named fiscal_data in your Supabase project with the following schema:
 
 Example Below:

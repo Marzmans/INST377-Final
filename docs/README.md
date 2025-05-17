@@ -50,7 +50,7 @@ SUPABASE_URL=[url provided on Supabase website, specific to one's account]
 SUPABASE_KEY=[Key provided on Supabase website, specific to one's account]
 
 ### Supabase DB Setup
-
+Disable RLS
 Create a table named fiscal_data in your Supabase project with the following schema:
 
 Example Below:
