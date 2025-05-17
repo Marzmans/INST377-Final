@@ -10,11 +10,13 @@ function App() {
   const [fiscalData, setFiscalData] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  // Fetch fiscal data on component mount
+  // REQUIREMENT: Fetch Data with API 
+  // Fetch fiscal data 
   useEffect(() => {
     fetchFiscalData();
   }, []);
   
+  // REQUIREMENT: Fetch #1
   const fetchFiscalData = async () => {
     try {
       const res = await fetch('/api/getStoredData');
@@ -25,6 +27,7 @@ function App() {
     }
   };
 
+  // REQUIREMENT: Fetch #2
   const loadData = async () => {
     setLoading(true);
     try {
@@ -32,7 +35,7 @@ function App() {
       const result = await res.json();
       
       if (result.success) {
-        // Refresh data after successfully loading new data
+        // Refresh data after loading new data
         await fetchFiscalData();
         return `Stored ${result.inserted} records successfully.`;
       } else {
@@ -46,6 +49,7 @@ function App() {
     }
   };
 
+  // REQUIREMENT:  3 app pages using React Router
   return (
     <Router>
       <div className="App">
@@ -62,7 +66,9 @@ function App() {
                 />
               } 
             />
+            {/* REQUIREMENT: About Page */}
             <Route path="/about" element={<About />} />
+            {/* REQUIREMENT: Project Specific Functionality Page with Chart.js*/}
             <Route 
               path="/trends" 
               element={<Trends fiscalData={fiscalData} />} 
